@@ -93,4 +93,55 @@ public class Client {
             System.exit(1);
         }
     }
+
+    /* SERVER METHODS */
+
+    private Server[] getServers(String message) {
+        send("GETS " + message);
+
+        // RECV: DATA nRecs recLen
+        int records = Integer.parseInt(readWithOK().split(" ")[1]);
+
+        String[] data = readWithOK().split("\n");
+        read();  // RECV: '.'
+
+        Server[] servers = new Server[records];
+        for (int i = 0; i < records; i++)
+            servers[i] = new Server(this, data[i]);
+
+        return servers;
+    }
+
+    /** Returns all servers that can immediately provide the resource requirements */
+    public Server[] getAvailableServers(int core, int memory, int disk) {
+        return getServers(String.format("Avail %d %d %d", core, memory, disk));
+    }
+
+    /** Returns all servers that can eventually provide the resource requirements */
+    public Server[] getCapableServers(int core, int memory, int disk) {
+        return getServers(String.format("Capable %d %d %d", core, memory, disk));
+    }
+
+    /** Returns all servers */
+    public Server[] getAllServers() {
+        return getServers("All");
+    }
+
+    /** Returns all servers of the given type */
+    public Server[] getServersByType(String type) {
+        return getServers("Type " + type);
+    }
+
+    /**
+     * Terminates a server, killing all waiting/running jobs
+     * and switching it to an inactive state.
+     */
+    public void terminateServer(String serverType, int serverId) {
+        send(String.format("TERM %s %d", serverType, serverId));
+    }
+
+    /* JOB METHODS */
+    public Job[] getJobs(String serverType, int serverId) {
+        throw new UnsupportedOperationException();
+    }
 }
