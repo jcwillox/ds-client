@@ -58,6 +58,22 @@ public class Client {
         System.out.println("SENT: " + message);
     }
 
+    /** Reads data from the server then responds with an OK */
+    public String readWithOK() {
+        String line = read();
+        send("OK");
+        return line;
+    }
+
+    /** Sends a message to the server then expects an OK response */
+    public void sendWithOK(String message) {
+        send(message);
+        if (!read().equals("OK")) {
+            System.out.println("Error: did not receive expected OK from server!");
+            System.exit(1);
+        }
+    }
+
     /** Quit and close connection to the server */
     public void quit() {
         send("QUIT");
