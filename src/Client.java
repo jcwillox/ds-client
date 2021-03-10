@@ -144,4 +144,9 @@ public class Client {
     public Job[] getJobs(String serverType, int serverId) {
         throw new UnsupportedOperationException();
     }
+
+    /** Submits a job to the specified server for processing */
+    public void scheduleJob(int jobId, String serverType, int serverId) {
+        sendWithOK(String.format("SCHD %d %s %d", jobId, serverType, serverId));
+    }
 }
