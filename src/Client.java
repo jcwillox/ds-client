@@ -4,6 +4,13 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
+// TODO: migrateJob [MIGJ]
+// TODO: killJob [KILJ]
+// TODO: getJobs [LSTJ]
+// TODO: getJobCount [CNTJ]
+// TODO: get server wait time [EJWT]
+// TODO: pushJob [PSHJ]
+
 public class Client {
     final String HOST = "127.0.0.1";
     final int PORT = 50000;
@@ -148,5 +155,6 @@ public class Client {
     /** Submits a job to the specified server for processing */
     public void scheduleJob(int jobId, String serverType, int serverId) {
         sendWithOK(String.format("SCHD %d %s %d", jobId, serverType, serverId));
+        // TODO: handle scheduling failures
     }
 }
