@@ -24,7 +24,7 @@ public class Server {
         this.runningJobs = Integer.parseInt(info[8]);
         this.client = client;
 
-        System.out.println(this.toString());
+        System.out.println(Constants.YELLOW + this.toString());
     }
 
     public Job[] getJobs() {

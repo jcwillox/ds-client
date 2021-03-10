@@ -20,7 +20,7 @@ public class Job {
         this.memory = Integer.parseInt(info[4]);
         this.disk = Integer.parseInt(info[5]);
 
-        System.out.println(this.toString());
+        System.out.println(Constants.YELLOW + this.toString());
     }
 
     public void schedule(Server server) {

@@ -35,7 +35,7 @@ public class Client {
             System.exit(1);
         }
 
-        System.out.println("RECV: " + line);
+        System.out.println(Constants.MAGENTA + "[RECV] " + line);
 
         if (line.equals("ERR")) {
             System.out.println("Received error from server, aborting!");
@@ -55,7 +55,7 @@ public class Client {
             e.printStackTrace();
             System.exit(1);
         }
-        System.out.println("SENT: " + message);
+        System.out.println(Constants.BLUE + "[SENT] " + message);
     }
 
     /** Reads data from the server then responds with an OK */
