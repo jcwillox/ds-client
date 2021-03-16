@@ -1,3 +1,8 @@
+package main.models;
+
+import main.Client;
+import main.Constants;
+
 public class Job {
     public final int submitTime;
     public final int id;

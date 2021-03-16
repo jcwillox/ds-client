@@ -1,3 +1,8 @@
+package main.models;
+
+import main.Client;
+import main.Constants;
+
 public class Server {
     public final String type;
     public final int id;

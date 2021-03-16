@@ -1,3 +1,5 @@
+package main;
+
 public interface Constants {
     String YELLOW = "\u001B[33m";
     String BLUE = "\u001B[34m";
