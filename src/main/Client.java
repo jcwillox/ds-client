@@ -10,13 +10,6 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
-// TODO: migrateJob [MIGJ]
-// TODO: killJob [KILJ]
-// TODO: getJobs [LSTJ]
-// TODO: getJobCount [CNTJ]
-// TODO: get server wait time [EJWT]
-// TODO: pushJob [PSHJ]
-
 public class Client {
     final String HOST = "127.0.0.1";
     final int PORT = 50000;
@@ -155,7 +148,6 @@ public class Client {
 
     /* JOB METHODS */
     public Job[] getJobs(String serverType, int serverID) {
-        //throw new UnsupportedOperationException();
         ArrayList<Job> jobs = new ArrayList<Job>();
         int nRecs;
         int recLen;
