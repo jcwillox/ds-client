@@ -169,8 +169,8 @@ public class Client {
                 break;
             } else if (response.substring(0,4).equals("DATA")) {  //check if it's a "DATA" response
                 String[] info = response.split(" ");
-                nRecs = info[1];
-                recLen = info[2];
+                nRecs = Integer.parseInt(info[1]);
+                recLen = Integer.parseInt(info[2]);
                 send("OK");
             } else {  
                 jobs.add(Job.fromListJob(this, response));
@@ -183,7 +183,7 @@ public class Client {
     }
 
     public void killJob(String serverType, int serverID, int jobID) {
-        send(String.format("KILJ %s %d %d", serverType, serverId, jobID));
+        send(String.format("KILJ %s %d %d", serverType, serverID, jobID));
     }
 
     public void migrateJob(int jobID, String srcServerType, int srcServerID, String tgtServerType, int tgtServerID) {

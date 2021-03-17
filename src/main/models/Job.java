@@ -38,20 +38,22 @@ public class Job {
         int core = Integer.parseInt(info[3]);
         int memory = Integer.parseInt(info[4]);
         int disk = Integer.parseInt(info[5]);
-        Job(client, startTime, id, state, estRuntime, core, memory, disk);
+        Client client1 = client;
+        return new Job(client1, startTime, id, state, estRuntime, core, memory, disk);
+
     }
 
     /** Deserialize response from the LSTJ request */
     public static Job fromListJob(Client client, String line) {
         String[] info = line.split(" ");
-        int startTime = integer.parseInt(info[2]);
+        int startTime = Integer.parseInt(info[2]);
         int id = Integer.parseInt(info[0]);
-        int state = Integer.parseint(info[1]);
-        int estRuntime = integer.parseInt(info[3]);
+        int state = Integer.parseInt(info[1]);
+        int estRuntime = Integer.parseInt(info[3]);
         int core = Integer.parseInt(info[4]);
-        int memory = integer.parseInt(info[5]);
+        int memory = Integer.parseInt(info[5]);
         int disk = Integer.parseInt(info[6]);
-        Job(client, startTime, id, state, estRuntime, core, memory, disk);
+        return new Job(client, startTime, id, state, estRuntime, core, memory, disk);
     }
 
     /*
