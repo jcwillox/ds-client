@@ -3,6 +3,7 @@ package main;
 import main.models.Job;
 import main.models.Server;
 
+import java.util.ArrayList;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -153,8 +154,56 @@ public class Client {
     }
 
     /* JOB METHODS */
-    public Job[] getJobs(String serverType, int serverId) {
-        throw new UnsupportedOperationException();
+    public Job[] getJobs(String serverType, int serverID) {
+        //throw new UnsupportedOperationException();
+        ArrayList<Job> jobs = new ArrayList<Job>();
+        int nRecs;
+        int recLen;
+        String response;
+        
+        send(String.format("LSTJ %s %d",serverType, serverID));
+
+        while (true) {
+            response = read();
+            if (response.equals(".")){  // check for end of DATA sequence
+                break;
+            } else if (response.substring(0,4).equals("DATA")) {  //check if it's a "DATA" response
+                String[] info = response.split(" ");
+                nRecs = info[1];
+                recLen = info[2];
+                send("OK");
+            } else {  
+                jobs.add(Job.fromListJob(this, response));
+                send("OK");
+            }
+        }
+
+        Job[] jobArr = jobs.toArray(new Job[0]);
+        return jobArr;
+    }
+
+    public void killJob(String serverType, int serverID, int jobID) {
+        send(String.format("KILJ %s %d %d", serverType, serverId, jobID));
+    }
+
+    public void migrateJob(int jobID, String srcServerType, int srcServerID, String tgtServerType, int tgtServerID) {
+        send(String.format("MIGJ %d %s %d %s %d", jobID, srcServerType, srcServerID, tgtServerType, tgtServerID));
+    }
+
+    public void pushJob() {
+        send("PSHJ");
+    }
+
+    public int getJobCount(String serverType, int serverID, int jobState) {
+        send(String.format("CNTJ %s %d %d", serverType, serverID, jobState));
+        int jc = Integer.parseInt(read());
+        return jc;
+    }
+
+    public int getServerWaitTime(String serverType, int serverID) {
+        send(String.format("EJWT %s %d",serverType,serverID));
+        int wt = Integer.parseInt(read());
+        return wt;
     }
 
     /** Submits a job to the specified server for processing */
