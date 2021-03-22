@@ -118,7 +118,9 @@ public class Client {
         return servers;
     }
 
-    /** Returns all servers that can immediately provide the resource requirements */
+    /**
+     * Returns all servers that can immediately provide the resource requirements
+     */
     public Server[] getAvailableServers(int core, int memory, int disk) {
         return getServers(String.format("Avail %d %d %d", core, memory, disk));
     }
@@ -139,8 +141,8 @@ public class Client {
     }
 
     /**
-     * Terminates a server, killing all waiting/running jobs
-     * and switching it to an inactive state.
+     * Terminates a server, killing all waiting/running jobs and switching it to an
+     * inactive state.
      */
     public void terminateServer(String serverType, int serverId) {
         send(String.format("TERM %s %d", serverType, serverId));
@@ -149,37 +151,25 @@ public class Client {
     /* JOB METHODS */
     public Job[] getJobs(String serverType, int serverID) {
         ArrayList<Job> jobs = new ArrayList<Job>();
-        int nRecs;
-        int recLen;
         String response;
-        
-        send(String.format("LSTJ %s %d",serverType, serverID));
-
+        send(String.format("LSTJ %s %d", serverType, serverID));
+        readWithOK();  // read Data response and ignores it
         while (true) {
             response = read();
-            if (response.equals(".")){  // check for end of DATA sequence
-                break;
-            } else if (response.substring(0,4).equals("DATA")) {  //check if it's a "DATA" response
-                String[] info = response.split(" ");
-                nRecs = Integer.parseInt(info[1]);
-                recLen = Integer.parseInt(info[2]);
-                send("OK");
-            } else {  
-                jobs.add(Job.fromListJob(this, response));
-                send("OK");
-            }
+            if (response.equals("."))
+                break;  // check for end of DATA sequence
+            jobs.add(Job.fromListJob(this, response));
+            send("OK");
         }
-
-        Job[] jobArr = jobs.toArray(new Job[0]);
-        return jobArr;
+        return jobs.toArray(new Job[0]);
     }
 
     public void killJob(String serverType, int serverID, int jobID) {
-        send(String.format("KILJ %s %d %d", serverType, serverID, jobID));
+        sendWithOK(String.format("KILJ %s %d %d", serverType, serverID, jobID));
     }
 
     public void migrateJob(int jobID, String srcServerType, int srcServerID, String tgtServerType, int tgtServerID) {
-        send(String.format("MIGJ %d %s %d %s %d", jobID, srcServerType, srcServerID, tgtServerType, tgtServerID));
+        sendWithOK(String.format("MIGJ %d %s %d %s %d", jobID, srcServerType, srcServerID, tgtServerType, tgtServerID));
     }
 
     public void pushJob() {
@@ -188,14 +178,12 @@ public class Client {
 
     public int getJobCount(String serverType, int serverID, int jobState) {
         send(String.format("CNTJ %s %d %d", serverType, serverID, jobState));
-        int jc = Integer.parseInt(read());
-        return jc;
+        return Integer.parseInt(read());
     }
 
     public int getServerWaitTime(String serverType, int serverID) {
-        send(String.format("EJWT %s %d",serverType,serverID));
-        int wt = Integer.parseInt(read());
-        return wt;
+        send(String.format("EJWT %s %d", serverType, serverID));
+        return Integer.parseInt(read());
     }
 
     /** Submits a job to the specified server for processing */
