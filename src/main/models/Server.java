@@ -32,7 +32,7 @@ public class Server {
         System.out.println(Constants.YELLOW + this.toString());
     }
 
-    public static Server serverFromLine(Client client, String line) {
+    public static Server fromGetServers(Client client, String line) {
         String[] info = line.split(" ");
         String type = info[0];
         int id = Integer.parseInt(info[1]);

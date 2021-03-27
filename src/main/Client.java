@@ -113,7 +113,7 @@ public class Client {
 
         Server[] servers = new Server[records];
         for (int i = 0; i < records; i++)
-            servers[i] = new Server(this, data[i]);
+            servers[i] = Server.fromGetServers(this, data[i]);
 
         return servers;
     }
