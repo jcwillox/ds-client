@@ -1,7 +1,7 @@
 package main.models;
 
 import main.Client;
-import main.Constants;
+import main.Logging;
 
 public class Job {
     public final int startTime;  // also called submitTime
@@ -24,7 +24,7 @@ public class Job {
         this.memory = memory;
         this.disk = disk;
 
-        System.out.println(Constants.YELLOW + this.toString());
+        Logging.yellow(this.toString());
     }
 
     /** Deserialize job schedule request from the server (JOBP, JOBN) */

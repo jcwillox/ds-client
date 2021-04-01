@@ -37,14 +37,14 @@ public class Client {
             } while (input.available() > 0);
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("Error while reading from socket!");
+            Logging.error("while reading from socket!");
             System.exit(1);
         }
 
-        System.out.println(Constants.MAGENTA + "[RECV] " + line);
+        Logging.magenta("[RECV] " + line);
 
         if (line.equals("ERR")) {
-            System.out.println("Received error from server, aborting!");
+            Logging.error("received error from server, aborting!");
             this.close();
             System.exit(1);
         }
@@ -61,7 +61,7 @@ public class Client {
             e.printStackTrace();
             System.exit(1);
         }
-        System.out.println(Constants.BLUE + "[SENT] " + message);
+        Logging.blue("[SENT] " + message);
     }
 
     /** Reads data from the server then responds with an OK */
@@ -75,7 +75,7 @@ public class Client {
     public void sendWithOK(String message) {
         send(message);
         if (!read().equals("OK")) {
-            System.out.println("Error: did not receive expected OK from server!");
+            Logging.error("did not receive expected OK from server!");
             System.exit(1);
         }
     }
@@ -95,7 +95,7 @@ public class Client {
             socket.close();
         } catch (IOException e) {
             e.printStackTrace();
-            System.err.println("Error while closing socket connection!");
+            Logging.error("while closing socket connection!");
             System.exit(1);
         }
     }

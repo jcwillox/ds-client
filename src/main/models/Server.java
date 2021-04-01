@@ -1,7 +1,7 @@
 package main.models;
 
 import main.Client;
-import main.Constants;
+import main.Logging;
 
 public class Server {
     public final String type;
@@ -29,7 +29,7 @@ public class Server {
         this.runningJobs = runningJobs;
         this.client = client;
 
-        System.out.println(Constants.YELLOW + this.toString());
+        Logging.yellow(this.toString());
     }
 
     public static Server fromGetServers(Client client, String line) {
