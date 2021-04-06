@@ -4,6 +4,7 @@ import main.models.Job;
 import main.models.Server;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -83,7 +84,7 @@ public class Client {
     /** Quit and close connection to the server */
     public void quit() {
         send("QUIT");
-        read();  // RECV: QUIT
+        read(); // RECV: QUIT
         close();
     }
 
@@ -109,7 +110,7 @@ public class Client {
         int records = Integer.parseInt(readWithOK().split(" ")[1]);
 
         String[] data = readWithOK().split("\n");
-        read();  // RECV: '.'
+        read(); // RECV: '.'
 
         Server[] servers = new Server[records];
         for (int i = 0; i < records; i++)
@@ -140,6 +141,19 @@ public class Client {
         return getServers("Type " + type);
     }
 
+    /** Returns the largest server comparing core, memory or disk size */
+    public Server getLargestServer() {
+        Server[] server = getAllServers();
+        Arrays.sort(server, (t1, t2) -> {
+            if (t1.core > t2.core)
+                return -1;
+            if (t1.memory > t2.memory)
+                return -1;
+            return Integer.compare(t2.disk, t1.disk);
+        });
+        return server[0];
+    }
+
     /**
      * Terminates a server, killing all waiting/running jobs and switching it to an
      * inactive state.
@@ -153,11 +167,11 @@ public class Client {
         ArrayList<Job> jobs = new ArrayList<Job>();
         String response;
         send(String.format("LSTJ %s %d", serverType, serverID));
-        readWithOK();  // read Data response and ignores it
+        readWithOK(); // read Data response and ignores it
         while (true) {
             response = read();
             if (response.equals("."))
-                break;  // check for end of DATA sequence
+                break; // check for end of DATA sequence
             jobs.add(Job.fromListJob(this, response));
             send("OK");
         }
