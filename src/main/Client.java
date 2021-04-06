@@ -4,7 +4,6 @@ import main.models.Job;
 import main.models.Server;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -139,19 +138,6 @@ public class Client {
     /** Returns all servers of the given type */
     public Server[] getServersByType(String type) {
         return getServers("Type " + type);
-    }
-
-    /** Returns the largest server comparing core, memory or disk size */
-    public Server getLargestServer() {
-        Server[] server = getAllServers();
-        Arrays.sort(server, (t1, t2) -> {
-            if (t1.core > t2.core)
-                return -1;
-            if (t1.memory > t2.memory)
-                return -1;
-            return Integer.compare(t2.disk, t1.disk);
-        });
-        return server[0];
     }
 
     /**
