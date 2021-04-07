@@ -83,7 +83,7 @@ public class Client {
     /** Quit and close connection to the server */
     public void quit() {
         send("QUIT");
-        read();  // RECV: QUIT
+        read(); // RECV: QUIT
         close();
     }
 
@@ -109,7 +109,7 @@ public class Client {
         int records = Integer.parseInt(readWithOK().split(" ")[1]);
 
         String[] data = readWithOK().split("\n");
-        read();  // RECV: '.'
+        read(); // RECV: '.'
 
         Server[] servers = new Server[records];
         for (int i = 0; i < records; i++)
@@ -153,11 +153,11 @@ public class Client {
         ArrayList<Job> jobs = new ArrayList<Job>();
         String response;
         send(String.format("LSTJ %s %d", serverType, serverID));
-        readWithOK();  // read Data response and ignores it
+        readWithOK(); // read Data response and ignores it
         while (true) {
             response = read();
             if (response.equals("."))
-                break;  // check for end of DATA sequence
+                break; // check for end of DATA sequence
             jobs.add(Job.fromListJob(this, response));
             send("OK");
         }
