@@ -28,8 +28,8 @@ public class Logging {
 
     public static void error(String message) {
         if (noColor)
-            System.out.println("[ERROR]" + message);
-        System.err.println(RED + message + RESET);
+            System.err.println("[ERROR]" + message);
+        System.err.println(RED + "[ERROR]" + message + RESET);
     }
 
     public static void green(String message) {

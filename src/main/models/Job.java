@@ -68,7 +68,8 @@ public class Job {
     @Override
     public String toString() {
         return String.format(
-            "<Job id=%d startTime=%d state=%d estRuntime=%d core=%d memory=%d disk=%d>",
-            id, startTime, state, estRuntime, core, memory, disk);
+                "<Job id=%d startTime=%d state=%d estRuntime=%d core=%d memory=%d disk=%d>",
+                id, startTime, state, estRuntime, core, memory, disk
+        );
     }
 }

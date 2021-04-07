@@ -1,9 +1,10 @@
 package main;
 
-import java.io.IOException;
-import java.util.Arrays;
 import main.models.Job;
 import main.models.Server;
+
+import java.io.IOException;
+import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -20,6 +21,8 @@ public class Main {
         client.read();
         client.send("AUTH " + name);
         client.read();
+
+        // read the first job
         client.send("REDY");
         String line = client.read();
 
@@ -28,15 +31,12 @@ public class Main {
 
         // handle job scheduling
         while (!line.equals("NONE")) {
-            String splitCmd[] = line.split(" ", 2);
-            if (!"JCPL".equals(splitCmd[0])) {
-                switch (splitCmd[0]) {
+            String[] splitCmd = line.split(" ", 2);
+            switch (splitCmd[0]) {
                 case "JOBP":
-                case "JOBN": {
+                case "JOBN":
                     Job job = Job.fromScheduleJob(client, splitCmd[1]);
                     job.schedule(server);
-                }
-                }
             }
             client.send("REDY");
             line = client.read();
@@ -48,14 +48,14 @@ public class Main {
 
     /** Returns the largest server comparing core, memory or disk size */
     private static Server getLargestServer(Client client) {
-        Server[] server = client.getAllServers();
-        Arrays.sort(server, (t1, t2) -> {
+        Server[] servers = client.getAllServers();
+        Arrays.sort(servers, (t1, t2) -> {
             if (t1.core > t2.core)
                 return -1;
             if (t1.memory > t2.memory)
                 return -1;
             return Integer.compare(t2.disk, t1.disk);
         });
-        return server[0];
+        return servers[0];
     }
 }

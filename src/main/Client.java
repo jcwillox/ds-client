@@ -27,13 +27,13 @@ public class Client {
     /** Reads and returns available data from the server */
     public String read() {
         int c;
-        String line = "";
+        StringBuilder sb = new StringBuilder();
 
         // read while available
         try {
             do {
                 c = input.read();
-                line += (char) c;
+                sb.append((char) c);
             } while (input.available() > 0);
         } catch (IOException e) {
             e.printStackTrace();
@@ -41,6 +41,7 @@ public class Client {
             System.exit(1);
         }
 
+        String line = sb.toString();
         Logging.magenta("[RECV] " + line);
 
         if (line.equals("ERR")) {
@@ -71,7 +72,7 @@ public class Client {
         return line;
     }
 
-    /** Sends a message to the server then expects an OK response */
+    /** Sends a message to the server then reads an OK response */
     public void sendWithOK(String message) {
         send(message);
         if (!read().equals("OK")) {
@@ -148,9 +149,15 @@ public class Client {
         send(String.format("TERM %s %d", serverType, serverId));
     }
 
+    public int getServerWaitTime(String serverType, int serverID) {
+        send(String.format("EJWT %s %d", serverType, serverID));
+        return Integer.parseInt(read());
+    }
+
     /* JOB METHODS */
+
     public Job[] getJobs(String serverType, int serverID) {
-        ArrayList<Job> jobs = new ArrayList<Job>();
+        ArrayList<Job> jobs = new ArrayList<>();
         String response;
         send(String.format("LSTJ %s %d", serverType, serverID));
         readWithOK(); // read Data response and ignores it
@@ -181,14 +188,8 @@ public class Client {
         return Integer.parseInt(read());
     }
 
-    public int getServerWaitTime(String serverType, int serverID) {
-        send(String.format("EJWT %s %d", serverType, serverID));
-        return Integer.parseInt(read());
-    }
-
     /** Submits a job to the specified server for processing */
     public void scheduleJob(int jobId, String serverType, int serverId) {
         sendWithOK(String.format("SCHD %d %s %d", jobId, serverType, serverId));
-        // TODO: handle scheduling failures
     }
 }

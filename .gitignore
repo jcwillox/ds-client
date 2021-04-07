@@ -24,4 +24,4 @@ hs_err_pid*
 
 ds-jobs.xml
 ds-system.xml
-/test/**/*.diff
+/tests/**/*.diff

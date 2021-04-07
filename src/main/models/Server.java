@@ -16,8 +16,8 @@ public class Server {
 
     private final Client client;
 
-    public Server(Client client, String type, int id, String state, int startTime, int core, int memory, int disk,
-            int waitingJobs, int runningJobs) {
+    public Server(Client client, String type, int id, String state, int startTime, int core, int memory, int disk, int waitingJobs, int runningJobs) {
+        this.client = client;
         this.type = type;
         this.id = id;
         this.state = state;
@@ -27,11 +27,11 @@ public class Server {
         this.disk = disk;
         this.waitingJobs = waitingJobs;
         this.runningJobs = runningJobs;
-        this.client = client;
 
         Logging.yellow(this.toString());
     }
 
+    /** Deserialize server response from GETS request */
     public static Server fromGetServers(Client client, String line) {
         String[] info = line.split(" ");
 
@@ -59,7 +59,8 @@ public class Server {
     @Override
     public String toString() {
         return String.format(
-            "<Server type='%s' id=%d state='%s' core=%d memory=%d, disk=%d>", 
-            type, id, state, core, memory, disk);
+                "<Server type='%s' id=%d state='%s' core=%d memory=%d, disk=%d>",
+                type, id, state, core, memory, disk
+        );
     }
 }
