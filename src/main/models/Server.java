@@ -34,6 +34,7 @@ public class Server {
 
     public static Server fromGetServers(Client client, String line) {
         String[] info = line.split(" ");
+
         String type = info[0];
         int id = Integer.parseInt(info[1]);
         String state = info[2];
@@ -57,7 +58,8 @@ public class Server {
 
     @Override
     public String toString() {
-        return String.format("<Server type='%s' id=%d state='%s' core=%d memory=%d, disk=%d>", type, id, state, core,
-                memory, disk);
+        return String.format(
+            "<Server type='%s' id=%d state='%s' core=%d memory=%d, disk=%d>", 
+            type, id, state, core, memory, disk);
     }
 }
