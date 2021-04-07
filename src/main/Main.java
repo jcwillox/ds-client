@@ -7,11 +7,18 @@ import main.models.Server;
 
 public class Main {
     public static void main(String[] args) throws IOException {
+        // read username from environment
+        String name = System.getenv("USER"); // get linux username
+        if (name == null) 
+            name = System.getenv("USERNAME"); // get windows username
+        if (name == null)
+            name = "unknown";
+
         // setup initial connection to the server
         Client client = new Client();
         client.send("HELO");
         client.read();
-        client.send("AUTH admin");
+        client.send("AUTH " + name);
         client.read();
         client.send("REDY");
         String line = client.read();
