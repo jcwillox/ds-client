@@ -9,9 +9,7 @@ import java.util.Arrays;
 public class Main {
     public static void main(String[] args) throws IOException {
         // read username from environment
-        String name = System.getenv("USER"); // get linux username
-        if (name == null) 
-            name = System.getenv("USERNAME"); // get windows username
+        String name = System.getProperty("user.name");
         if (name == null)
             name = "unknown";
 
