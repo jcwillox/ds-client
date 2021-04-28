@@ -10,6 +10,7 @@ javac "$(realpath ../src/main)"/**/*.java -d . -verbose
 
 # prevent test script from killing this process
 trap -- '' SIGTERM
+trap "rm -rf ./main" SIGINT
 
 echo "running tests"
 bash ./tests1.sh main/Main.class
