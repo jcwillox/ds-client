@@ -43,9 +43,9 @@ public class Client {
         }
 
         String line = sb.toString();
-        Logging.magenta("[RECV] " + line);
+        Logging.magenta("[RECV]", line);
 
-        if (line.equals("ERR")) {
+        if (line.startsWith("ERR")) {
             Logging.error("received error from server, aborting!");
             this.close();
             System.exit(1);
@@ -63,7 +63,7 @@ public class Client {
             e.printStackTrace();
             System.exit(1);
         }
-        Logging.blue("[SENT] " + message);
+        Logging.blue("[SENT]", message);
     }
 
     /** Reads data from the server then responds with an OK */

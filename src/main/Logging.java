@@ -17,34 +17,37 @@ public class Logging {
         noLogging = System.getenv("NO_LOGGING") != null;
     }
 
-    public static void println(String color, String message) {
+    public static void println(String color, String... values) {
         if (noLogging)
             return;
+        String message = String.join(" ", values);
         if (noColor)
             System.out.println(message);
         else
             System.out.println(color + message + RESET);
     }
 
-    public static void error(String message) {
+    public static void error(String... values) {
+        String message = String.join(" ", values);
         if (noColor)
-            System.err.println("[ERROR]" + message);
-        System.err.println(RED + "[ERROR]" + message + RESET);
+            System.err.println("[ERROR] " + message);
+        else
+            System.err.println(RED + "[ERROR] " + message + RESET);
     }
 
-    public static void green(String message) {
-        println(GREEN, message);
+    public static void green(String... values) {
+        println(GREEN, values);
     }
 
-    public static void yellow(String message) {
-        println(YELLOW, message);
+    public static void yellow(String... values) {
+        println(YELLOW, values);
     }
 
-    public static void blue(String message) {
-        println(BLUE, message);
+    public static void blue(String... values) {
+        println(BLUE, values);
     }
 
-    public static void magenta(String message) {
-        println(MAGENTA, message);
+    public static void magenta(String... values) {
+        println(MAGENTA, values);
     }
 }
