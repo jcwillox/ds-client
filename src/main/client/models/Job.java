@@ -1,6 +1,6 @@
-package main.models;
+package main.client.models;
 
-import main.Client;
+import main.client.Client;
 import main.Logging;
 
 public class Job {

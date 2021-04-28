@@ -1,7 +1,8 @@
 package main;
 
-import main.models.Job;
-import main.models.Server;
+import main.client.Client;
+import main.client.models.Job;
+import main.client.models.Server;
 
 import java.io.IOException;
 import java.util.Arrays;

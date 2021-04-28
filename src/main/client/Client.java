@@ -1,14 +1,15 @@
-package main;
+package main.client;
 
-import main.models.Job;
-import main.models.Server;
+import main.Logging;
+import main.client.models.Job;
+import main.client.models.Server;
 
-import java.util.ArrayList;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 
 public class Client {
     final String HOST = "127.0.0.1";
