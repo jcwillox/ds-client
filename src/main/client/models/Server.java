@@ -52,6 +52,10 @@ public class Server {
         return client.getJobs(type, id);
     }
 
+    public void schedule(Job job) {
+        client.scheduleJob(job.id, type, id);
+    }
+
     public void terminate() {
         client.terminateServer(type, id);
     }
