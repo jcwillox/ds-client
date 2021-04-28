@@ -70,14 +70,14 @@ public class Client {
     /** Reads data from the server then responds with an OK */
     public String readWithOK() {
         String line = read();
-        send("OK");
+        send(Commands.OK);
         return line;
     }
 
     /** Sends a message to the server then reads an OK response */
     public void sendWithOK(String message) {
         send(message);
-        if (!read().equals("OK")) {
+        if (!read().equals(Commands.OK)) {
             Logging.error("did not receive expected OK from server!");
             System.exit(1);
         }
@@ -85,7 +85,7 @@ public class Client {
 
     /** Quit and close connection to the server */
     public void quit() {
-        send("QUIT");
+        send(Commands.QUIT);
         read(); // RECV: QUIT
         close();
     }
@@ -115,7 +115,7 @@ public class Client {
         for (int i = 0; i < records; i++)
             servers[i] = Server.fromGetServers(this, read());
         if (records > 0)
-            send("OK");
+            send(Commands.OK);
         read(); // RECV: '.'
 
         return servers;
@@ -168,7 +168,7 @@ public class Client {
             if (response.equals("."))
                 break; // check for end of DATA sequence
             jobs.add(Job.fromListJob(this, response));
-            send("OK");
+            send(Commands.OK);
         }
         return jobs.toArray(new Job[0]);
     }

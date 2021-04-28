@@ -1,6 +1,7 @@
 package main;
 
 import main.client.Client;
+import main.client.Commands;
 import main.client.models.Job;
 import main.client.models.Server;
 
@@ -16,8 +17,7 @@ public class Main {
 
         // setup initial connection to the server
         Client client = new Client();
-        client.send("HELO");
-        client.read();
+        client.sendWithOK(Commands.HELLO);
         client.send("AUTH " + name);
         client.read();
 
