@@ -32,10 +32,11 @@ public class Client {
 
         // read while available
         try {
-            do {
-                c = input.read();
+            c = input.read();
+            while (c != '\n') {
                 sb.append((char) c);
-            } while (input.available() > 0);
+                c = input.read();
+            }
         } catch (IOException e) {
             e.printStackTrace();
             Logging.error("while reading from socket!");
@@ -57,7 +58,7 @@ public class Client {
     /** Send a message to the server */
     public void send(String message) {
         try {
-            output.write(message.getBytes(StandardCharsets.UTF_8));
+            output.write((message + '\n').getBytes(StandardCharsets.UTF_8));
             output.flush();
         } catch (IOException e) {
             e.printStackTrace();
@@ -110,12 +111,12 @@ public class Client {
         // RECV: DATA nRecs recLen
         int records = Integer.parseInt(readWithOK().split(" ")[1]);
 
-        String[] data = readWithOK().split("\n");
-        read(); // RECV: '.'
-
         Server[] servers = new Server[records];
         for (int i = 0; i < records; i++)
-            servers[i] = Server.fromGetServers(this, data[i]);
+            servers[i] = Server.fromGetServers(this, read());
+        if (records > 0)
+            send("OK");
+        read(); // RECV: '.'
 
         return servers;
     }
