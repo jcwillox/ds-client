@@ -17,9 +17,7 @@ public class Main {
 
         // setup initial connection to the server
         Client client = new Client();
-        client.sendWithOK(Commands.HELLO);
-        client.send("AUTH " + name);
-        client.read();
+        client.auth(name);
 
         // read the first job
         client.send("REDY");

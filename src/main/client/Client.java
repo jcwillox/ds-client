@@ -23,6 +23,7 @@ public class Client {
         socket = new Socket(HOST, PORT);
         input = socket.getInputStream();
         output = socket.getOutputStream();
+        sendWithOK(Commands.HELLO);
     }
 
     /** Reads and returns available data from the server */
@@ -67,6 +68,8 @@ public class Client {
         Logging.blue("[SENT]", message);
     }
 
+    /* UTILITY METHODS */
+
     /** Reads data from the server then responds with an OK */
     public String readWithOK() {
         String line = read();
@@ -81,6 +84,15 @@ public class Client {
             Logging.error("did not receive expected OK from server!");
             System.exit(1);
         }
+    }
+
+    /** Send ready message to the server */
+    public void ready() {
+        send(Commands.READY);
+    }
+
+    public void auth(String name) {
+        sendWithOK("AUTH " + name);
     }
 
     /** Quit and close connection to the server */
