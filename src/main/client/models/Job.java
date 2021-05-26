@@ -67,6 +67,18 @@ public class Job {
         client.migrateJob(id, from.type, from.id, to.type, to.id);
     }
 
+    /** Returns all servers that can eventually provide the resource requirements */
+    public Server[] getCapableServers() {
+        return client.getCapableServers(core, memory, disk);
+    }
+
+    /**
+     * Returns all servers that can immediately provide the resource requirements
+     */
+    public Server[] getAvailableServers() {
+        return client.getAvailableServers(core, memory, disk);
+    }
+
     @Override
     public String toString() {
         return String.format(

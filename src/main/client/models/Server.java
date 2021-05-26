@@ -1,7 +1,7 @@
 package main.client.models;
 
-import main.client.Client;
 import main.Logging;
+import main.client.Client;
 
 public class Server {
     public final String type;
@@ -58,6 +58,10 @@ public class Server {
 
     public void terminate() {
         client.terminateServer(type, id);
+    }
+
+    public int getServerWaitTime() {
+        return client.getServerWaitTime(type, id);
     }
 
     @Override
