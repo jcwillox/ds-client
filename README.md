@@ -10,10 +10,10 @@ The project requires at least Java 11, older versions may also work but are unsu
 
 On Linux you can run the following command, which will compile the project and run the tests.
 ```bash
-./tests/run1.sh
+./tests/test.sh
 ```
 
 On Windows you can run the tests with the following command using WSL.
 ```powershell
-wsl bash ./tests/run1.sh
+wsl bash ./tests/test.sh
 ```
