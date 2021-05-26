@@ -6,7 +6,7 @@ import main.client.Client;
 public class Server {
     public final String type;
     public final int id;
-    public final String state; // inactive, booting, idle, active, unavailable
+    public final String state; // one of ServerState
     public final int startTime;
     public final int core;
     public final int memory;
