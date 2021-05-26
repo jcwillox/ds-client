@@ -86,6 +86,15 @@ public class Client {
         }
     }
 
+    /**
+     * Returns an iterator-like interface that can be used to loop over messages
+     * sent by the server, it uses {@code ready} and {@code read} to get new messages.
+     * Invoking this method will immediately fetch the first message from the server.
+     */
+    public Messages messages() {
+        return new Messages(this);
+    }
+
     /** Send ready message to the server */
     public void ready() {
         send(Commands.READY);
