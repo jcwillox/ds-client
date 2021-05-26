@@ -64,6 +64,29 @@ public class Server {
         return client.getServerWaitTime(type, id);
     }
 
+    /** Returns an id that uniquely identifies this server */
+    public String getUUID() {
+        return type + id;
+    }
+
+    /** Returns true if the server has the resources to run the job */
+    public boolean canRun(Job job) {
+        return core >= job.core && memory >= job.memory && disk >= job.disk;
+    }
+
+    /** Returns true if the server can run the job immediately */
+    public boolean canRunImmediately(Job job) {
+        return canRun(job) && (state.equals(ServerState.IDLE) || state.equals(ServerState.ACTIVE));
+    }
+
+    /**
+     * Returns true if the server can run the job in the near future,
+     * i.e. it must finish booting first
+     */
+    public boolean canRunSoon(Job job) {
+        return canRun(job) && !state.equals(ServerState.UNAVAILABLE);
+    }
+
     @Override
     public String toString() {
         return String.format(
