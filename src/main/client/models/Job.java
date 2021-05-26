@@ -4,7 +4,8 @@ import main.client.Client;
 import main.Logging;
 
 public class Job {
-    public final int startTime; // also called submitTime
+    public int startTime;
+    public int submitTime;
     public final int id;
     public final int state; // 0 is unknown, 1 is waiting, 2 is running
     public final int estRuntime;
@@ -14,9 +15,10 @@ public class Job {
 
     private final Client client;
 
-    public Job(Client client, int startTime, int id, int state, int estRuntime, int core, int memory, int disk) {
+    public Job(Client client, int startTime, int submitTime, int id, int state, int estRuntime, int core, int memory, int disk) {
         this.client = client;
         this.startTime = startTime;
+        this.submitTime = submitTime;
         this.id = id;
         this.state = state;
         this.estRuntime = estRuntime;
@@ -31,7 +33,7 @@ public class Job {
     public static Job fromScheduleJob(Client client, String line) {
         String[] info = line.split(" ");
 
-        int startTime = Integer.parseInt(info[0]);
+        int submitTime = Integer.parseInt(info[0]);
         int id = Integer.parseInt(info[1]);
         int state = 0; // unknown
         int estRuntime = Integer.parseInt(info[2]);
@@ -39,7 +41,7 @@ public class Job {
         int memory = Integer.parseInt(info[4]);
         int disk = Integer.parseInt(info[5]);
 
-        return new Job(client, startTime, id, state, estRuntime, core, memory, disk);
+        return new Job(client, -1, submitTime, id, state, estRuntime, core, memory, disk);
     }
 
     /** Deserialize response from the LSTJ request */
@@ -54,7 +56,7 @@ public class Job {
         int memory = Integer.parseInt(info[5]);
         int disk = Integer.parseInt(info[6]);
 
-        return new Job(client, startTime, id, state, estRuntime, core, memory, disk);
+        return new Job(client, startTime, -1, id, state, estRuntime, core, memory, disk);
     }
 
     public void schedule(Server server) {
@@ -68,8 +70,8 @@ public class Job {
     @Override
     public String toString() {
         return String.format(
-                "<Job id=%d startTime=%d state=%d estRuntime=%d core=%d memory=%d disk=%d>",
-                id, startTime, state, estRuntime, core, memory, disk
+                "<Job id=%d startTime=%d submitTime=%d state=%d estRuntime=%d core=%d memory=%d disk=%d>",
+                id, startTime, submitTime, state, estRuntime, core, memory, disk
         );
     }
 }
