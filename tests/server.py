@@ -130,8 +130,19 @@ def main(
             else:
                 console.rule("[bold green]SUCCESS", style="bright_black")
 
+            stats = []
+            for line in reversed(output.splitlines(keepends=False)):
+                if line.startswith("# -"):
+                    break
+                stats.append(line)
+
+            for line in reversed(stats):
+                console.print(line)
+
             if client_command:
                 client.wait_for_close(4)
+
+            console.rule("[bold yellow]STATS", style="bright_black")
 
             if once or client_command:
                 break
