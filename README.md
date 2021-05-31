@@ -17,3 +17,17 @@ On Windows you can run the tests with the following command using WSL.
 ```powershell
 wsl bash ./tests/test.sh
 ```
+
+### Comparison Testing
+You can use the `test_results` binary to gather performance data on the current
+algorithm and compare it to the 3 baseline algorithms and ATL. 
+
+Linux
+```bash
+./tests/run_test_results.sh -o co
+```
+
+Windows
+```powershell
+wsl bash ./tests/run_test_results.sh -o co
+```
