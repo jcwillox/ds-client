@@ -29,7 +29,6 @@ public interface XmlParser {
             e.printStackTrace();
         }
 
-        return servers.toArray(new XmlServer[]{});
+        return servers.toArray(new XmlServer[] {});
     }
 }
-
