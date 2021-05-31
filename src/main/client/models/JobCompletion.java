@@ -8,7 +8,6 @@ public class JobCompletion {
     public final String serverType;
     public final int serverId;
 
-
     public JobCompletion(int endTime, int id, String serverType, int serverId) {
         this.endTime = endTime;
         this.id = id;
@@ -28,6 +27,10 @@ public class JobCompletion {
         int serverId = Integer.parseInt(info[3]);
 
         return new JobCompletion(endTime, id, serverType, serverId);
+    }
+
+    public String getServerUUID() {
+        return serverType + serverId;
     }
 
     @Override
