@@ -56,6 +56,10 @@ public class Server {
         client.scheduleJob(job.id, type, id);
     }
 
+    public void killJob(Job job) {
+        client.killJob(type, id, job.id);
+    }
+
     public void terminate() {
         client.terminateServer(type, id);
     }
@@ -80,8 +84,8 @@ public class Server {
     }
 
     /**
-     * Returns true if the server can run the job in the near future,
-     * i.e. it must finish booting first
+     * Returns true if the server can run the job in the near future, i.e. it must
+     * finish booting first
      */
     public boolean canRunSoon(Job job) {
         return canRun(job) && !state.equals(ServerState.UNAVAILABLE);
