@@ -16,7 +16,7 @@ public class SmartQueue {
     private int queueSize = 5;
 
     /** Returns a server that can run the job with the best fitness value */
-    private static Server getBestServer(Server[] servers, Job job) {
+    public static Server getBestServer(Server[] servers, Job job) {
         Integer fitness = null;
         Server bestServer = null;
 
@@ -43,7 +43,7 @@ public class SmartQueue {
     }
 
     /** Returns the server which will be available the soonest */
-    private static Server getSoonestServer(Server[] servers) {
+    public static Server getSoonestServer(Server[] servers) {
         Integer min = null;
         Server minServer = null;
 

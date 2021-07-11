@@ -23,6 +23,12 @@ public class Main {
         // handle job scheduling
         new SmartQueue().run(client, messages);
 
+        // new AllToBest().run(client, messages);
+        // new AllToCheapest().run(client, messages);
+        // new AllToLargest().run(client, messages);
+        // new AllToLargest2().run(client, messages);
+        // new AllToSoonest().run(client, messages);
+
         // quit and close connection
         client.quit();
     }
